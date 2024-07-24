@@ -57,6 +57,11 @@ sequencia :: Int -> Int -> [Int]
 sequencia 0 _ = []
 sequencia n m = m : sequencia (n - 1) (m + 1)
 
+-- Ordenação de listas
+ordena :: Ord a => [a] -> [a]
+ordena [] = []
+ordena (x:xs) = ordena [y | y <- xs, y <= x] ++ [x] ++ ordena [y | y <- xs, y > x]
+
 
 -- Função principal para testar a função remove
 main :: IO ()
@@ -75,3 +80,6 @@ main = do
   print $ uniao lista1 lista2  -- Saída: [3, 6, 5, 7, 2, 9, 1]
 
   print $ sequencia 3 4  -- Saída: [4, 5, 6]
+
+  print $ ordena [5, 2, 1, 3, 4]        -- Output: [1, 2, 3, 4, 5]
+
