@@ -26,6 +26,16 @@ maiores n xs = aux n [] xs
           | z < m     = go z (m:acc) zs
           | otherwise = go m (z:acc) zs
 
+-- Divide - Q10
+divide :: [a] -> Int -> ([a], [a])
+divide xs n = divideAux xs n []
+
+-- Aux para Divide
+divideAux :: [a] -> Int -> [a] -> ([a], [a])
+divideAux ys 0 acc = (reverse acc, ys)
+divideAux [] _ acc = (reverse acc, [])
+divideAux (y:ys) n acc = divideAux ys (n - 1) (y:acc)
+
 -- Função principal para testar a função remove
 main :: IO ()
 main = do
@@ -33,3 +43,5 @@ main = do
   let elemento = 2
   print $ remove elemento lista  -- Output: [1, 3, 4, 2, 5]
   print $ maiores 3 lista        -- Output: [5, 8, 7]
+  print $ divide lista 4    -- Output: ([1,2,3,4], [2,5,9,9])
+
