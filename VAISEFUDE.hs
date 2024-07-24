@@ -36,12 +36,42 @@ divideAux ys 0 acc = (reverse acc, ys)
 divideAux [] _ acc = (reverse acc, [])
 divideAux (y:ys) n acc = divideAux ys (n - 1) (y:acc)
 
+-- Unir - Q13
+uniao :: Eq a => [a] -> [a] -> [a]
+uniao xs ys = removeDuplicatas (xs ++ ys)
+
+-- Aux - unir -> verifica presença de x em [x]
+elem' :: Eq a => a -> [a] -> Bool
+elem' _ [] = False
+elem' x (y:ys) = x == y || elem' x ys
+
+-- Aux - unir -> retira as duplicatas de uma lista
+removeDuplicatas :: Eq a => [a] -> [a]
+removeDuplicatas [] = []
+removeDuplicatas (x:xs)
+  | elem' x xs = removeDuplicatas xs
+  | otherwise = x : removeDuplicatas xs
+
+-- Sequência começando de X números, seguindo: [y, y+1, y+2...]
+sequencia :: Int -> Int -> [Int]
+sequencia 0 _ = []
+sequencia n m = m : sequencia (n - 1) (m + 1)
+
+
 -- Função principal para testar a função remove
 main :: IO ()
 main = do
   let lista = [1, 2, 3, 4, 2, 5, 9 ,9]
-  let elemento = 2
-  print $ remove elemento lista  -- Output: [1, 3, 4, 2, 5]
-  print $ maiores 3 lista        -- Output: [5, 8, 7]
-  print $ divide lista 4    -- Output: ([1,2,3,4], [2,5,9,9])
 
+  let elemento = 2
+  print $ remove elemento lista  -- Saída: [1, 3, 4, 2, 5]
+  
+  print $ maiores 3 lista        -- Saída: [5, 8, 7]
+  
+  print $ divide lista 4    -- Saída: ([1,2,3,4], [2,5,9,9])
+
+  let lista1 = [1, 1, 1, 2]
+  let lista2 = [2, 1, 2, 1, 2]
+  print $ uniao lista1 lista2  -- Saída: [3, 6, 5, 7, 2, 9, 1]
+
+  print $ sequencia 3 4  -- Saída: [4, 5, 6]
