@@ -1,10 +1,20 @@
+-- --  --  --  --
+--  Questão 1  --
+--  --  --  -- -- 
+unica_ocorrencia  :: (Eq a) => a -> [a] -> Bool
+unica_ocorrencia _ [] = False
+unica_ocorrencia  numero (cabeca:resto) 
+    | cabeca == numero = True
+    | otherwise = unica_ocorrencia  numero resto
 
--- Remove - Q4
-remove :: Eq a => a -> [a] -> [a]
+-- --  --  --  --
+--  Questão 4  --
+--  --  --  -- -- 
+remove :: (Eq a) => a -> [a] -> [a]
 remove _ [] = []
-remove x (y:ys)
- | x == y      = ys
- | otherwise = y : remove x ys
+remove elemento (cabeca:resto)
+ | elemento == cabeca = resto
+ | otherwise = cabeca : remove elemento resto
 
 -- Maiores Q 7
 maiores :: Ord a => Int -> [a] -> [a]
