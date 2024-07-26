@@ -1,7 +1,7 @@
 -- --  --  --  --
 --  Questão 1  --
 --  --  --  -- -- 
-unica_ocorrencia  :: (Eq a) => a -> [a] -> Bool
+unica_ocorrencia :: (Eq a) => a -> [a] -> Bool
 unica_ocorrencia _ [] = False
 unica_ocorrencia  numero (cabeca:resto) 
     | cabeca == numero = True
@@ -16,25 +16,14 @@ remove elemento (cabeca:resto)
  | elemento == cabeca = resto
  | otherwise = cabeca : remove elemento resto
 
--- Maiores Q 7
-maiores :: Ord a => Int -> [a] -> [a]
-maiores n xs = aux n [] xs
-  where
-    aux 0 acc _ = reverse acc
-    aux _ acc [] = reverse acc
-    aux n acc (x:xs)
-      | length acc < n = aux n (x:acc) xs
-      | otherwise = let (minAcc, restAcc) = findMinAndRest acc
-                    in if x > minAcc
-                       then aux n (x:restAcc) xs
-                       else aux n acc xs
-    findMinAndRest [] = error "Empty list"
-    findMinAndRest (y:ys) = go y [] ys
-      where
-        go m acc [] = (m, acc)
-        go m acc (z:zs)
-          | z < m     = go z (m:acc) zs
-          | otherwise = go m (z:acc) zs
+-- --  --  --  --
+--  Questão 7  --
+--  --  --  -- -- 
+maiores :: Integer -> [Integer] -> [Integer]
+maiores _ [] = []
+maiores elemento (cabeca:resto)
+  | cabeca > elemento = cabeca : maiores elemento resto
+  | otherwise = maiores elemento resto
 
 -- Divide - Q10
 divide :: [a] -> Int -> ([a], [a])
