@@ -25,15 +25,14 @@ maiores elemento (cabeca:resto)
   | cabeca > elemento = cabeca : maiores elemento resto
   | otherwise = maiores elemento resto
 
--- Divide - Q10
-divide :: [a] -> Int -> ([a], [a])
-divide xs n = divideAux xs n []
-
--- Aux para Divide
-divideAux :: [a] -> Int -> [a] -> ([a], [a])
-divideAux ys 0 acc = (reverse acc, ys)
-divideAux [] _ acc = (reverse acc, [])
-divideAux (y:ys) n acc = divideAux ys (n - 1) (y:acc)
+-- --  --  --  --
+--  Questão 10  --
+--  --  --  -- -- 
+divide1 :: [Integer] -> Integer -> ([Integer],[Integer])
+divide1 [] _ = ([],[])
+divide1 original 0 = ([],original)
+divide1 (cabeca:resto) elemento = (cabeca:primeiro, original)
+  where (primeiro,original) = divide1 resto (elemento-1)
 
 -- Unir - Q13
 uniao :: Eq a => [a] -> [a] -> [a]
