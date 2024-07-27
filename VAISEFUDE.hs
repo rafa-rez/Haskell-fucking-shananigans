@@ -28,27 +28,21 @@ maiores elemento (cabeca:resto)
 -- --  --  --  --
 --  Questão 10  --
 --  --  --  -- -- 
-divide1 :: [Integer] -> Integer -> ([Integer],[Integer])
-divide1 [] _ = ([],[])
-divide1 original 0 = ([],original)
-divide1 (cabeca:resto) elemento = (cabeca:primeiro, original)
-  where (primeiro,original) = divide1 resto (elemento-1)
+divide :: [Integer] -> Integer -> ([Integer],[Integer])
+divide [] _ = ([],[])
+divide original 0 = ([],original)
+divide (cabeca:resto) elemento = (cabeca:primeiro, original)
+  where (primeiro,original) = divide resto (elemento-1)
 
--- Unir - Q13
-uniao :: Eq a => [a] -> [a] -> [a]
-uniao xs ys = removeDuplicatas (xs ++ ys)
-
--- Aux - unir -> verifica presença de x em [x]
-elem' :: Eq a => a -> [a] -> Bool
-elem' _ [] = False
-elem' x (y:ys) = x == y || elem' x ys
-
--- Aux - unir -> retira as duplicatas de uma lista
-removeDuplicatas :: Eq a => [a] -> [a]
-removeDuplicatas [] = []
-removeDuplicatas (x:xs)
-  | elem' x xs = removeDuplicatas xs
-  | otherwise = x : removeDuplicatas xs
+--  --  --  --  --
+--  Questão 13  --
+--  --  --  --  -- 
+uniao :: Eq t => [t] -> [t] -> [t]
+uniao listaA [] = listaA
+uniao [] listaB = listaB
+uniao listaA (cabecaB:restoB)
+  | (unica_ocorrencia cabecaB listaA) == True = uniao listaA restoB
+  | otherwise = uniao (listaA ++ [cabecaB]) restoB
 
 -- Sequência começando de X números, seguindo: [y, y+1, y+2...]
 sequencia :: Int -> Int -> [Int]
