@@ -44,34 +44,53 @@ uniao listaA (cabecaB:restoB)
   | (unica_ocorrencia cabecaB listaA) == True = uniao listaA restoB
   | otherwise = uniao (listaA ++ [cabecaB]) restoB
 
--- Sequência começando de X números, seguindo: [y, y+1, y+2...]
+--  --  --  --  --
+--  Questão 16  --
+--  --  --  --  -- 
 sequencia :: Int -> Int -> [Int]
 sequencia 0 _ = []
 sequencia n m = m : sequencia (n - 1) (m + 1)
 
--- Ordenação de listas
+--  --  --  --  --
+--  Questão 19  --
+--  --  --  --  -- 
 ordena :: Ord a => [a] -> [a]
 ordena [] = []
-ordena (x:xs) = ordena [y | y <- xs, y <= x] ++ [x] ++ ordena [y | y <- xs, y > x]
+ordena (cabeca:resto) = ordena [y | y <- resto, y <= cabeca] ++ [cabeca] ++ ordena [y | y <- resto, y > cabeca]
+
+--  --  --  --  --
+--  Questão 22  --
+--  --  --  --  --
+rodarEsquerda :: Int -> [lista] -> [lista]
+rodarEsquerda 0 lista = lista
+rodarEsquerda _ [] = []
+rodarEsquerda elemento (cabeca:resto) = rodarEsquerda (elemento-1) (resto ++ [cabeca]) 
+
+--  --  --  --  --
+--  Questão 25  --
+--  --  --  --  --
+
+--  --  --  --  --
+--  Questão 28  --
+--  --  --  --  --
+mediana :: [Int] -> Float
+mediana [] = 0
+mediana lista = medianaAux lista 0 (contaElementos lista - 1)
+
+medianaAux :: [Int] -> Int -> Int -> Float
+medianaAux lista inicio fim
+  | inicio == fim = fromIntegral (pegaElemento lista inicio)
+  | inicio + 1 == fim = (fromIntegral (pegaElemento lista inicio) + fromIntegral (pegaElemento lista fim)) / 2.0
+  | otherwise = medianaAux lista (inicio + 1) (fim - 1)
+
+contaElementos :: [Int] -> Int
+contaElementos [] = 0
+contaElementos (_:resto) = 1 + contaElementos resto
+
+pegaElemento :: [Int] -> Int -> Int
+pegaElemento (cabeca:_) 0 = cabeca
+pegaElemento (_:resto) elemento = pegaElemento resto (elemento-1)
 
 
--- Função principal para testar a função remove
-main :: IO ()
-main = do
-  let lista = [1, 2, 3, 4, 2, 5, 9 ,9]
 
-  let elemento = 2
-  print $ remove elemento lista  -- Saída: [1, 3, 4, 2, 5]
-  
-  print $ maiores 3 lista        -- Saída: [5, 8, 7]
-  
-  print $ divide lista 4    -- Saída: ([1,2,3,4], [2,5,9,9])
-
-  let lista1 = [1, 1, 1, 2]
-  let lista2 = [2, 1, 2, 1, 2]
-  print $ uniao lista1 lista2  -- Saída: [3, 6, 5, 7, 2, 9, 1]
-
-  print $ sequencia 3 4  -- Saída: [4, 5, 6]
-
-  print $ ordena [5, 2, 1, 3, 4]        -- Output: [1, 2, 3, 4, 5]
 
