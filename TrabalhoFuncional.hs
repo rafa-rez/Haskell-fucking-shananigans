@@ -1,3 +1,13 @@
+-------------------------------------------------------
+--         TRABALHO DE PROGRAMAÇÃO FUNCIONAL         --       
+--                    ALUNOS:                        --
+-- JOSÉ ACERBI ALMEIDA NETO. MATRÍCULA: 202310421    --
+-- RAFAEL ALVES REZENDE SILVA. MATRÍCULA: 202310875  --
+-------------------------------------------------------
+
+--Funções para a questão 25
+import Data.Char (toUpper, toLower)
+
 -- --  --  --  --
 --  Questão 1  --
 --  --  --  -- -- 
@@ -69,28 +79,66 @@ rodarEsquerda elemento (cabeca:resto) = rodarEsquerda (elemento-1) (resto ++ [ca
 --  --  --  --  --
 --  Questão 25  --
 --  --  --  --  --
+primeiras_maiusculas :: String -> String
+primeiras_maiusculas str = capitalizaPalavras str True
+
+capitalizaPalavras :: String -> Bool -> String
+capitalizaPalavras [] _ = []
+capitalizaPalavras (cabeca:resto) True = toUpper cabeca : capitalizaPalavras resto False
+capitalizaPalavras (cabeca:resto) False
+    | cabeca == ' ' = cabeca : capitalizaPalavras resto True
+    | otherwise = toLower cabeca : capitalizaPalavras resto False
 
 --  --  --  --  --
 --  Questão 28  --
 --  --  --  --  --
-mediana :: [Int] -> Float
+mediana :: (Ord a, Fractional a) => [a] -> a
 mediana [] = 0
-mediana lista = medianaAux lista 0 (contaElementos lista - 1)
+mediana lista = medianaAux lista 0 (comprimento lista - 1)
 
-medianaAux :: [Int] -> Int -> Int -> Float
+medianaAux :: (Ord a, Fractional a) => [a] -> Int -> Int -> a
 medianaAux lista inicio fim
-  | inicio == fim = fromIntegral (pegaElemento lista inicio)
-  | inicio + 1 == fim = (fromIntegral (pegaElemento lista inicio) + fromIntegral (pegaElemento lista fim)) / 2.0
+  | inicio == fim = pegaElemento lista inicio
+  | inicio + 1 == fim = (pegaElemento lista inicio + pegaElemento lista fim) / 2
   | otherwise = medianaAux lista (inicio + 1) (fim - 1)
 
-contaElementos :: [Int] -> Int
-contaElementos [] = 0
-contaElementos (_:resto) = 1 + contaElementos resto
+comprimento :: [a] -> Int
+comprimento [] = 0
+comprimento (_:resto) = 1 + comprimento resto
 
-pegaElemento :: [Int] -> Int -> Int
+pegaElemento :: [a] -> Int -> a
 pegaElemento (cabeca:_) 0 = cabeca
 pegaElemento (_:resto) elemento = pegaElemento resto (elemento-1)
 
+--  --  --  --  --
+--  Questão 31  --
+--  --  --  --  --
+palindromo :: String -> Bool
+palindromo str = ehPalindromo str 0 (comprimento str - 1)
 
+ehPalindromo :: String -> Int -> Int -> Bool
+ehPalindromo str i j
+    | i >= j = True
+    | charAt str i /= charAt str j = False
+    | otherwise = ehPalindromo str (i + 1) (j - 1)
 
+charAt :: String -> Int -> Char
+charAt (cabeca:resto) 0 = cabeca
+charAt (cabeca:resto) n = charAt resto (n - 1)
 
+--  --  --  --  --
+--  Questão 34  --
+--  --  --  --  --
+bolha :: [Int] -> [Int]
+bolha xs = bolhaAux xs (comprimento xs)
+
+bolhaAux :: [Int] -> Int -> [Int]
+bolhaAux xs 0 = xs
+bolhaAux xs n = bolhaAux (bolhaPassada xs) (n - 1)
+
+bolhaPassada :: [Int] -> [Int]
+bolhaPassada [] = []
+bolhaPassada [x] = [x]
+bolhaPassada (x:y:xs)
+    | x > y     = y : bolhaPassada (x:xs)
+    | otherwise = x : bolhaPassada (y:xs)
